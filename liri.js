@@ -2,6 +2,7 @@ var axios = require("axios");
 var Spotify = require("node-spotify-api");
 var inquirer = require("inquirer");
 var fs = require("fs");
+var os = require('os');
 
 // Keys
 require("dotenv").config();
@@ -25,7 +26,7 @@ function takeInput(command, args){
             movieThis(args.join("+"));
             break;
         case "do-what-it-says":
-            console.log("do-what-it-says");
+            doWhatItSays();
             break;
         //if the command is not valid, let the user know and give them a chance to re-enter the command
         default:
@@ -109,7 +110,12 @@ function movieThis(movieName){
 }
 
 function doWhatItSays(){
-    
+    var random = fs.readFileSync("./random.txt", {encoding: "utf-8"}).split(os.EOL);
+    var line = random[Math.floor(Math.random() * random.length)];
+
+    console.log(line);
+
+    takeInput(line.split(" ")[0], line.split(" ").slice(1));
 }
 
 takeInput(command, args);
