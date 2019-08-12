@@ -1,6 +1,7 @@
 var axios = require("axios");
 var Spotify = require("node-spotify-api");
 var inquirer = require("inquirer");
+var fs = require("fs");
 
 // Keys
 require("dotenv").config();
@@ -21,7 +22,7 @@ function takeInput(command, args){
             spotifyThisSong(args.join(" "))
             break;
         case "movie-this":
-            console.log("movie-this");
+            movieThis(args.join("+"));
             break;
         case "do-what-it-says":
             console.log("do-what-it-says");
@@ -64,7 +65,9 @@ function concertThis(artist){
 }
 
 function spotifyThisSong(songName){
-    console.log(songName)
+    if(songName == ""){
+        songName = "The Sign";
+    }
     spotify.search({
         type: "track",
         query: songName
@@ -84,6 +87,29 @@ function spotifyThisSong(songName){
     }).catch(function(error){
         if(error) throw error;
     });
+}
+
+function movieThis(movieName){
+    if(movieName == ""){
+        movieName = "Mr.+Nobody";
+    }
+    axios.get(`http://www.omdbapi.com/?t=${movieName}&apikey=be479476`).then(function(res){
+        var movie = res.data;
+        console.log("--------------------");
+        console.log(movie.Title);
+        console.log(`Came out in ${movie.Year}`);
+        console.log(`IMDB rating: ${movie.imdbRating}`);
+        console.log(`Produced in: ${movie.Country}`);
+        console.log(`Actors: ${movie.Actors}`);
+        console.log(movie.Plot);
+        console.log("--------------------");
+    }).catch(function(error){
+        if(error) throw error;
+    });
+}
+
+function doWhatItSays(){
+    
 }
 
 takeInput(command, args);
