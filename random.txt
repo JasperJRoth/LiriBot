@@ -1,5 +1,5 @@
 spotify-this-song I Want it That Way
-spotify-this-song I Don't Care
+spotify-this-song I Dont Care
 spotify-this-song Bad Guy
 spotify-this-song Talk
 spotify-this-song If I Can't Have You
